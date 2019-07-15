@@ -1,10 +1,6 @@
-from flask import Flask, abort, request
-from flask_restful import Resource, Api
-from api.utils import find_item
-
-app = Flask(__name__)
-app.url_map.strict_slashes = False # Make api address /posts works like /posts/
-api = Api(app)
+from flask import abort
+from flask_restful import Resource
+from utils import find_item
 
 posts = [
     {
@@ -32,11 +28,3 @@ class PostsResource(Resource):
             'total': posts.__len__(),
             'data': posts,
         }
-
-api.add_resource(PostsResource, '/posts')
-api.add_resource(PostResource, '/posts/<int:post_id>')
-
-
-@app.errorhandler(404)
-def not_found(e):
-    return '', 404
