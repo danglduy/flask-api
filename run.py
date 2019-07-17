@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, jsonify
 from flask_migrate import Migrate
 from config import env_configs
 from api.v1 import api_v1_bp
@@ -9,7 +9,7 @@ env = os.getenv('FLASK_ENV', 'production')
 
 
 def not_found(e):
-    return '', 404
+    return jsonify(message=e.description), 404
 
 
 def create_app(env=env):
