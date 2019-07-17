@@ -1,5 +1,6 @@
 import os
 
+
 class Config(object):
     DB_HOST = os.getenv('FLASK_APP_DB_HOST', 'localhost')
     DB_PORT = os.getenv('FLASK_APP_DB_PORT', 3306)
@@ -9,11 +10,21 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+
 class ProductionConfig(Config):
     pass
+
 
 class DevelopmentConfig(Config):
     pass
 
+
 class TestingConfig(Config):
     pass
+
+
+env_configs = {
+    'development': DevelopmentConfig,
+    'testing': TestingConfig,
+    'production': ProductionConfig
+}
