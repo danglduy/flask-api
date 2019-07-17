@@ -1,7 +1,6 @@
 from flask import Flask, request, abort
 from flask_restful import Resource
 from api.models.post import Post, PostSchema
-from api.database import db
 
 
 def return_if_not_found(data):
@@ -35,12 +34,9 @@ class PostsResource(Resource):
             content = request.get_json().get('content')
         else:
             content = request.form.get("content")
-        if content is None:
-            abort(400)
 
         post = Post(content=content)
-        db.session.add(post)
-        db.session.commit()
+        post.save()
 
         post_data = PostSchema().dump(post).data
         return post_data
